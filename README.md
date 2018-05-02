@@ -7,7 +7,7 @@ Node.js SDK for FreePP Chat API
 ### install
 Using [npm](https://www.npmjs.com/):
 
-``` bash
+```bash
 $ npm install freepp-chatapi-nodejs-sdk
 ```
 
@@ -15,8 +15,8 @@ $ npm install freepp-chatapi-nodejs-sdk
 The full examples with comments can be found in examples folder.
 For the specifications of API, please refer to API Reference.
 
-``` bash
-$ git clone https://github.com/perrywu/freepp-chatapi-nodejs-sdk
+```bash
+$ git clone https://github.com/PerryWu/freepp-chatapi-nodejs-sdk
 $ cd freepp-chatapi-nodejs-sdk
 $ npm install
 $ node examples/all_type_echo.js
@@ -25,13 +25,13 @@ $ node examples/all_type_echo.js
 ## Basic Usage
 
 ### Include the library
-```
+```javascript
 const freepp = require('freepp-chatapi-nodejs-sdk');
 ```
 
 ### Configuration
 For the usage of webhook and client, freepp access token and appkey are needed. About issuing the token and appkey, please refer to Getting started with the chat API.
-```
+```javascript
 const config = {
     accessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
     agid: 'YOUR_AGENT_ID',
@@ -43,7 +43,7 @@ freepp.middleware(config);
 ```
 
 ### Usage
-```
+```javascript
 const express = require('express');
 const freepp = require('freepp-chatapi-nodejs-sdk');
 const async = require('async');
@@ -114,7 +114,7 @@ Express is a minimal web framework for Node.js, which is widely used in Node.js 
 We skip the detailed guide for Express. If more information is needed about Express, please refer to its documentation.
 
 Here is an example of an HTTP server built with Express.
-```
+```javascript
 const express = require('express')
 
 const app = express()
@@ -128,7 +128,7 @@ app.listen(8080)
 The server above listens to 8080 and will response with an empty object for POST /webhook. We will add webhook functionality to this server.
 
 
-```
+```javascript
 const express = require('express')
 const freepp = require('freepp-chatapi-nodejs-sdk');
 
@@ -150,25 +150,25 @@ We have imported middleware from the package and make the Express app to use the
 
 ### Do not use the webhook middleware() for other usual routes
 // don't
-```
+```javascript
 app.use(freepp.middleware(config))
 ```
 
 // do
-```
+```javascript
 app.use('/webhook', freepp.middleware(config))
 ```
 The middleware will throw an exception when the x-joinme-signature header is not set. If you want to handle usual user requests, the middleware shouldn't be used for them.
 
 ### Do not use another body-parser before the webhook middleware()
 // don't
-```
+```javascript
 app.use(bodyParser.json())
 app.use('/webhook', middleware(config))
 ```
 
 // do
-```
+```javascript
 app.use('/webhook', middleware(config))
 app.use(bodyParser.json())
 ```
@@ -186,7 +186,7 @@ For development and test usages, ngrok works perfectly.
 Client is to send messages, get user or content information, or leave chats. A client instance provides functions for messaging APIs, so that you do not need to worry about HTTP requests and can focus on data. For type signatures of the methods, please refer to its API reference.
 
 ### Create a client
-```
+```javascript
 const freepp = require('freepp-chatapi-nodejs-sdk');
 const config = {
     accessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
@@ -197,7 +197,7 @@ const client = freepp.Client(config);
 ```
 And now you can call client functions as usual:
 
-```
+```javascript
 client.pushMessage({to: pid}, { type: 'text', text: 'hello, world' });
 ```
 
@@ -206,6 +206,7 @@ client.pushMessage({to: pid}, { type: 'text', text: 'hello, world' });
 ### Client
 
 ***client.pushMessage(dest, messages, cb)***
+
 Send messages to specific destination.
 ```
 dest
@@ -223,6 +224,7 @@ cb
 ```
 
 ***client.replyMessage(replyToken, messages, cb)***
+
 Reply a message from webhook using replyToken
 ```
 replyToken
@@ -234,6 +236,7 @@ cb
 ```
 
 ***client.getProfile(pid, cb)***
+
 Get a profile infomation
 ```
 pid
@@ -243,6 +246,7 @@ cb
 ```
 
 ***client.leaveGroup(gid, cb)***
+
 Leave a group 
 ```
 gid
@@ -252,6 +256,7 @@ cb
 ```
 
 ***client.setMenu(menuBody, cb)***
+
 Setup menu
 ```
 menuBody
