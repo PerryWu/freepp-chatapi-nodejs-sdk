@@ -5,7 +5,6 @@ const async = require('async');
 
 const config = {
     accessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
-    agid: 'YOUR_AGENT_ID',
     appKey: 'YOUR_APP_KEY',
 };
 

@@ -5,7 +5,6 @@ const async = require('async');
 
 const config = {
     accessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
-    agid: 'YOUR_AGENT_ID',
     appKey: 'YOUR_APP_KEY',
 };
 
@@ -15,7 +14,7 @@ app.post('/webhook', freepp.middleware(config), (req, res) => {
     console.log('Got message', req.body, req.headers);
     async.map(req.body.events, (event, cb) => {
         handleEvent(event, cb);
-    }, (err, result) => {
+    }, (err, results) => {
         if (err) {
             return res.status(500).end();
         }
@@ -110,7 +109,7 @@ function handleText(message, replyToken, source, cb) {
                             `Display name: ${profile.name}, Pid: ${profile.pid}, Locale: ${profile.locale}`,
                         ], cb
                     )
-                }], cb)
+                }], cb);
             } else {
                 return replyText(replyToken, 'Bot can\'t use profile API without user ID', cb);
             }

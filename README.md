@@ -34,7 +34,6 @@ For the usage of webhook and client, freepp access token and appkey are needed. 
 ```javascript
 const config = {
     accessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
-    agid: 'YOUR_AGENT_ID',
     appKey: 'YOUR_APP_KEY',
 };
 
@@ -50,7 +49,6 @@ const async = require('async');
 
 const config = {
     accessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
-    agid: 'YOUR_AGENT_ID',
     appKey: 'YOUR_APP_KEY',
 };
 
@@ -136,7 +134,6 @@ const app = express()
 
 const config = {
     accessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
-    agid: 'YOUR_AGENT_ID',
     appKey: 'YOUR_APP_KEY',
 };
 
@@ -190,7 +187,6 @@ Client is to send messages, get user or content information, or leave chats. A c
 const freepp = require('freepp-chatapi-nodejs-sdk');
 const config = {
     accessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
-    agid: 'YOUR_AGENT_ID',
     appKey: 'YOUR_APP_KEY',
 };
 const client = freepp.Client(config);
@@ -198,8 +194,21 @@ const client = freepp.Client(config);
 And now you can call client functions as usual:
 
 ```javascript
-client.pushMessage({to: pid}, { type: 'text', text: 'hello, world' });
+client.pushMessage({to: pid}, { type: 'text', text: 'hello, world' }, cb);
 ```
+
+### Error
+Any errors occur while calling Client functions, The callback function will be invoked and error message is stored in *err* with format like below
+```
+{ name: 'HTTPError',
+  message: 'Invalid Token',
+  statusCode: 400,
+  statusMessage: 'Bad Request',
+  stack: 'Error\n    at new module.exports.HTTPError (/data/freepp-chatapi-nodejs-sdk/lib/exceptions.js:7:19)\n    at Request.request [as _callback] (/data/freepp-chatapi-nodejs-sdk/lib/client.js:39:27)\n    at Request.self.callback (/data/freepp-chatapi-nodejs-sdk/node_modules/request/request.js:186:22)\n    at emitTwo (events.js:106:13)\n    at Request.emit (events.js:191:7)\n    at Request.<anonymous> (/data/freepp-chatapi-nodejs-sdk/node_modules/request/request.js:1163:10)\n    at emitOne (events.js:96:13)\n    at Request.emit (events.js:188:7)\n    at IncomingMessage.<anonymous> (/data/freepp-chatapi-nodejs-sdk/node_modules/request/request.js:1085:12)\n    at IncomingMessage.g (events.js:292:16)' }
+
+```
+
+Please refer to Chat API to know the error definitions.
 
 ## API Reference
 
@@ -220,7 +229,7 @@ dest.only
 messages
 (array of object) message body, please refer to ChatAPI document
 cb
-(function) callback
+(function) callback function, invoked with (err, result).
 ```
 
 ***client.replyMessage(replyToken, messages, cb)***
@@ -232,7 +241,7 @@ replyToken
 messages
 (array of object) message body, please refer to ChatAPI document
 cb
-(function) callback
+(function) callback function, invoked with (err, result).
 ```
 
 ***client.getProfile(pid, cb)***
@@ -242,7 +251,7 @@ Get a profile infomation
 pid
 (string) FreePP profile id
 cb
-(function) callback
+(function) callback function, invoked with (err, result).
 ```
 
 ***client.leaveGroup(gid, cb)***
@@ -252,7 +261,7 @@ Leave a group
 gid
 (string) FreePP group id
 cb
-(function) callback
+(function) callback function, invoked with (err, result).
 ```
 
 ***client.setMenu(menuBody, cb)***
@@ -262,7 +271,7 @@ Setup menu
 menuBody
 (object) Please refer to ChatAPI document
 cb
-(function) callback
+(function) callback function, invoked with (err, result).
 ```
 
 ## License
