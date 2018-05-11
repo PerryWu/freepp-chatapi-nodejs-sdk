@@ -19,6 +19,7 @@ For the specifications of API, please refer to API Reference.
 $ git clone https://github.com/PerryWu/freepp-chatapi-nodejs-sdk
 $ cd freepp-chatapi-nodejs-sdk
 $ npm install
+(Revise examples/all_type_echo.js to update your access token and appkey)
 $ node examples/all_type_echo.js
 ```
 
